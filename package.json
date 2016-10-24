@@ -1,0 +1,41 @@
+{
+  "name": "anime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src/server -d lib && webpack --progress",
+    "start": "node lib/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  },
+  "dependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-plugin-transform-react-jsx": "latest",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "latest",
+    "css-loader": "latest",
+    "express": "^4.14.0",
+    "extract-text-webpack-plugin": "latest",
+    "html-webpack-plugin": "latest",
+    "less": "latest",
+    "less-loader": "latest",
+    "muicss": "latest",
+    "node-fetch": "^1.6.3",
+    "pinyin": "^2.8.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "style-loader": "latest",
+    "webpack": "latest"
+  }
+}
