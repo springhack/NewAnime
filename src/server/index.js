@@ -1,5 +1,5 @@
 import express from 'express';
-import {updateInfo} from './dilidili.js'
+import child_process from 'child_process';
 
 let app = express();
 let dilidili = null;
@@ -8,10 +8,13 @@ let Log = info => {
     console.log(`[${new Date()}] => ${info}`);
 };
 
-let updater = async () => {
+let updater = () => {
     Log('采集开始');
-    dilidili  = await updateInfo();
-    Log('采集结束');
+    let chd = child_process.fork('./children.js');
+    chd.on('message', obj => {
+        dilidili = obj
+        Log('采集结束');
+    });
 }
 
 updater();
