@@ -63,9 +63,20 @@ export default class App extends React.Component {
             .then(this.updateChildren.bind(this));
     }
     updateChildren(json) {
-        let btns = json.desc.map((item, index) => {
-            return <Button key={index} onClick={() => this.setState({current : index})}>{item}</Button>;
-        });
+        let btns;
+        if (json == null)
+        {
+            btns = <Button>此刻无数据,应该是我春在喝咖啡－。－</Button>;
+            json = {
+                year : 1970,
+                month : 1,
+                info : []
+            };
+        } else {
+            btns = json.desc.map((item, index) => {
+                return <Button key={index} onClick={() => this.setState({current : index})}>{item}</Button>;
+            });
+        }
         this.setState({
             year : json.year,
             month : json.month,

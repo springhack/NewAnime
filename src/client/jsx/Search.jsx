@@ -15,6 +15,6 @@ export default class Search extends React.Component {
     }
     onChange(e) {
         let pinyin = ReactDOM.findDOMNode(this.refs.pinyin).getElementsByTagName('input')[0].value;
-        Action.doSearch(pinyin);
+        setTimeout(() => Action.doSearch(pinyin), 0);
     }
 }

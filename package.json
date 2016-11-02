@@ -17,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "alux": "^1.0.5",
     "babel-cli": "^6.16.0",
     "babel-core": "latest",
     "babel-loader": "latest",
@@ -24,6 +25,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "latest",
+    "child_process": "^1.0.2",
     "css-loader": "latest",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "latest",
@@ -32,6 +34,7 @@
     "less-loader": "latest",
     "muicss": "latest",
     "node-fetch": "^1.6.3",
+    "path": "^0.12.7",
     "pinyin": "^2.8.0",
     "react": "latest",
     "react-dom": "latest",

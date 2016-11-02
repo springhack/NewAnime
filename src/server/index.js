@@ -1,5 +1,6 @@
 import express from 'express';
 import child_process from 'child_process';
+import path from 'path';
 
 let app = express();
 let dilidili = null;
@@ -10,7 +11,7 @@ let Log = info => {
 
 let updater = () => {
     Log('采集开始');
-    let chd = child_process.fork('./children.js');
+    let chd = child_process.fork(path.join(__dirname, 'children.js'));
     chd.on('message', obj => {
         dilidili = obj
         Log('采集结束');
