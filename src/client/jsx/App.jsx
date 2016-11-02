@@ -58,6 +58,7 @@ export default class App extends React.Component {
         );
     }
     componentDidMount() {
+        this.updateChildren.call(this, null);
         fetch('/dilidili')
             .then(res => res.json())
             .then(this.updateChildren.bind(this));
@@ -66,7 +67,7 @@ export default class App extends React.Component {
         let btns;
         if (json == null)
         {
-            btns = <Button>此刻无数据,应该是我春在喝咖啡－。－</Button>;
+            btns = <Button>此刻无数据,应该是我春在喝咖啡,你等会儿哈－。－</Button>;
             json = {
                 year : 1970,
                 month : 1,
