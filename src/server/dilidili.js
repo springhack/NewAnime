@@ -2,6 +2,8 @@ import fetch from 'node-fetch';
 import pinyin from 'pinyin';
 import 'babel-polyfill';
 
+const URL = 'www.dilidili.wang';
+
 //定义变量
 let index = new Map([
     [10, '年十月新番'],
@@ -14,8 +16,8 @@ let index = new Map([
 let getMonth = month => month<10?`0${month}`:`${month}`;
 
 let getIndex = async () => {
-    let html = await fetch('http://www.dilidili.com/').then(res => res.text()); 
-    let info = /"(http:\/\/www.dilidili.com\/anime\/(\d{6})\/)".*target="_blank">(.*)<\/a>/.exec(html);
+    let html = await fetch(`http://${URL}/`).then(res => res.text()); 
+    let info = /"(http:\/\/www.dilidili.wang\/anime\/(\d{6})\/)".*target="_blank">(.*)<\/a>/.exec(html);
     let urls = [];
     let desc = [];
     let year = Number.parseInt(info[2].substring(0, info[2].length - 2));
@@ -29,15 +31,19 @@ let getIndex = async () => {
             --t_year;
             t_month += 12;
         }
-        urls.push(`http://www.dilidili.com/anime/${t_year}${getMonth(t_month)}/`);
+        urls.push(`http://${URL}/anime/${t_year}${getMonth(t_month)}/`);
         desc[i] = t_year.toString() + index.get(t_month);
     }
     return {urls, year, month, desc};
 };
 
 let getJson = async url => {
-    let html = await fetch(url).then(res => res.text()); 
+    let html = await fetch(url).then(res => res.text());
     let arr = html.match(/(<dl>[^]+?<\/dl>)/g);
+    arr.shift();
+    arr.shift();
+    arr.shift();
+    arr.shift();
     let regexp = /src="(.*)"[^]+?<h3><a href="(\/anime\/.*\/)">(.*)<\/a><\/h3>[^]+?<b>.*<\/b>([^<]*)[^]+?<b>.*<\/b>([^<]*)[^]+?<b>.*<\/b>([^<]*)[^]+?<b>.*<\/b>([^<]*)[^]+?<b>.*<\/b>([^<]*)[^]+?<b>.*<\/b>([^<]*)[^]+?<b[^>]*>.*<\/b>([^<]*)/;
     return arr.map(item => {
         let tmp = regexp.exec(item);
@@ -50,13 +56,13 @@ let getJson = async url => {
         if (tmp[1].indexOf('http') == -1)
         {
             if (tmp[1].indexOf('/') == 0)
-                tmp[1] = `http://dilidili.com${tmp[1]}`;
+                tmp[1] = `http://${URL}${tmp[1]}`;
             else
-                tmp[1] = `http://dilidili.com/${tmp[1]}`;
+                tmp[1] = `http://${URL}/${tmp[1]}`;
         }
         return {
             img : tmp[1],
-            url : `http://www.dilidili.com${tmp[2]}`.trim(),
+            url : `http://${URL}${tmp[2]}`.trim(),
             title : tmp[3].trim(),
             area : tmp[4].trim(),
             time : tmp[5].trim(),
@@ -71,6 +77,8 @@ let getJson = async url => {
 };
 
 let getInfo = async urls => {
+    return Promise.all(urls.map(url => getJson(url)));
+    /**
     return new Promise((res, rej) => {
         let count = 0;
         let info = [];
@@ -85,6 +93,7 @@ let getInfo = async urls => {
             });
         }
     });
+    **/
 };
 
 let updateInfo = async () => {
